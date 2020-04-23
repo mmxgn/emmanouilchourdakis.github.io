@@ -33,7 +33,8 @@ I am interested in combining AI/ML, Music and Natural Language Processing and Ge
 
 |**Date** |**Organization**|**Role**|
 |---------|----------------|---------|
-|2019/2020| Sound and Music Computing Conference| Program Committee Member                                         |
+|2019/2020| Sound and Music Computing Conference| Technical Program Committee Member                                         |
+|2018     | China Conference on Sound and Music Computing| Technical Program Committee Member                                         |
 |2018     | Digital Audio Effects Conference    | Sub-reviewer                                                     |
 |2016/2017| Queen Mary University of London     | Teaching Assistant for the Music and Speech Processing MSc module|
 |2016/2017| Queen Mary University of London     | Teaching Assistant for supporting Matlab-based MSc final projects|

@@ -20,12 +20,10 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 # Blogroll
-LINKS = (('Pelican', 'http://getpelican.com/'),
-         ('Intelligent Sound Engineering', 'https://intelligentsoundengineering.wordpress.com/'),)
+LINKS = (('Intelligent Sound Engineering', 'https://intelligentsoundengineering.wordpress.com/'),)
 
 # Social widget
 SOCIAL = (('LinkedIn', 'https://www.linkedin.com/in/echourdakis/'),
-          ('Twitter', 'https://twitter.com/mmxgn'),
           ('Youtube', 'https://www.youtube.com/user/mmxgn'))
 
 DEFAULT_PAGINATION = 1
