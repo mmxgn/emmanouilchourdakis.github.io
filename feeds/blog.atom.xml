@@ -1,3 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Emmanouil Theofanis Chourdakis - Blog</title><link href="https://mmxgn.github.io/" rel="alternate"></link><link href="https://mmxgn.github.io/feeds/blog.atom.xml" rel="self"></link><id>https://mmxgn.github.io/</id><updated>2020-04-22T00:00:00+03:00</updated><entry><title>Hello World</title><link href="https://mmxgn.github.io/hello-world.html" rel="alternate"></link><published>2020-04-22T00:00:00+03:00</published><updated>2020-04-22T00:00:00+03:00</updated><author><name>Emmanouil Theofanis Chourdakis</name></author><id>tag:mmxgn.github.io,2020-04-22:/hello-world.html</id><summary type="html">&lt;p&gt;Introductory article&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;img alt="This is a photo of me" src="{filename}../../../img/avatar.png"&gt;&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Emmanouil Theofanis Chourdakis - Blog</title><link href="https://mmxgn.github.io/" rel="alternate"></link><link href="https://mmxgn.github.io/feeds/blog.atom.xml" rel="self"></link><id>https://mmxgn.github.io/</id><updated>2021-06-15T00:00:00+03:00</updated><entry><title>Using Visual Studio Code as an IDE for making DOS Programs (part 1)</title><link href="https://mmxgn.github.io/using-visual-studio-code-as-an-ide-for-making-dos-programs-part-1.html" rel="alternate"></link><published>2021-06-15T00:00:00+03:00</published><updated>2021-06-15T00:00:00+03:00</updated><author><name>Emmanouil Theofanis Chourdakis</name></author><id>tag:mmxgn.github.io,2021-06-15:/using-visual-studio-code-as-an-ide-for-making-dos-programs-part-1.html</id><summary type="html">&lt;p&gt;How to set up tasks in vscode in order to use dosbox to compile stuff&lt;/p&gt;</summary><content type="html">&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;While I have done some game programming using modern game engines, I would like to go a bit deeper into how those engines work, and try to make a little game in an engine of my own. While I can use libraries such as &lt;a href="https://www.libsdl.org/download-2.0.php"&gt;SDL&lt;/a&gt; or &lt;a href="https://www.raylib.com/"&gt;RayLib&lt;/a&gt; on a modern system, using modern IDEs, etc, I want to go a bit more bare-bone. Inspired by &lt;a href="https://www.youtube.com/watch?v=f9kaOk0a664"&gt;a YouTube video on DOS programming in 2019&lt;/a&gt; and &lt;a href="https://www.reddit.com/r/gamedev/comments/nu7mx8/how_can_i_get_started_with_gamegraphics/h0w2bky/?context=3"&gt;a Reddit discussion I came across&lt;/a&gt;, I will try to make my own game-engine, for educational purposes (I don't know what it's going to be focused yet). The engine will run on dosbox. The code, however, I want to write on a modern IDE since, nostalgia aside, I will surely miss modern editor environment features. Since I am using VSCode at work and I am familiar with it, I will mostly use that. &lt;/p&gt;
+&lt;h1&gt;Configuring VSCode to run applications with &lt;code&gt;dosbox&lt;/code&gt;&lt;/h1&gt;
+&lt;p&gt;This part is surprisingly easy. I will assume you have installed dosbox (I am actually using dosbox-x and &lt;strong&gt;strongly&lt;/strong&gt; recommend you do the same) to your system and is in the system path. If not, just replace &lt;code&gt;dosbox-x&lt;/code&gt; in the following steps to your full &lt;code&gt;/path/to/dosbox&lt;/code&gt; (or &lt;code&gt;C:\path\to\dosbox.exe&lt;/code&gt; on windows) path. Create an empty folder where you will store your project, open it with VSCode (&lt;code&gt;File -&amp;gt; Open Folder...&lt;/code&gt;). Now we have to do two things:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Tell VSCode how to compile and run our files.&lt;/li&gt;
+&lt;li&gt;Assign key-bindings to the above tasks.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;To do that, we create a folder: &lt;code&gt;.vscode&lt;/code&gt;. In it create a file: &lt;code&gt;tasks.json&lt;/code&gt;. In &lt;code&gt;tasks.json&lt;/code&gt;, add (replace &lt;code&gt;dosbox-x&lt;/code&gt; below with your version of the dosbox binary):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;quot;version&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;2.0.0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;quot;tasks&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+        &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;quot;type&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;shell&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;quot;label&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Compile&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;quot;command&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;dosbox-x&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;quot;args&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+                &lt;span class="s2"&gt;&amp;quot;-c&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="s2"&gt;&amp;quot;mount c ${workspaceFolder}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="s2"&gt;&amp;quot;-c&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="s2"&gt;&amp;quot;c:\\compile.bat&amp;quot;&lt;/span&gt;
+            &lt;span class="p"&gt;],&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;quot;group&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="nt"&gt;&amp;quot;kind&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;build&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="nt"&gt;&amp;quot;isDefault&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;true&lt;/span&gt;
+            &lt;span class="p"&gt;}&lt;/span&gt;
+        &lt;span class="p"&gt;},&lt;/span&gt;
+        &lt;span class="p"&gt;{&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;quot;type&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;shell&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;quot;label&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Run&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;quot;command&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;dosbox-x&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;quot;args&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+                &lt;span class="s2"&gt;&amp;quot;-c&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="s2"&gt;&amp;quot;mount c ${workspaceFolder}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="s2"&gt;&amp;quot;-c&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="s2"&gt;&amp;quot;c:\\run.bat&amp;quot;&lt;/span&gt;
+            &lt;span class="p"&gt;],&lt;/span&gt;
+            &lt;span class="nt"&gt;&amp;quot;group&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+                &lt;span class="nt"&gt;&amp;quot;kind&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;test&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                &lt;span class="nt"&gt;&amp;quot;isDefault&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="kc"&gt;false&lt;/span&gt;
+            &lt;span class="p"&gt;}&lt;/span&gt;
+
+        &lt;span class="p"&gt;}&lt;/span&gt;        
+    &lt;span class="p"&gt;],&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;What this does is create two new tasks: &lt;code&gt;Compile&lt;/code&gt; and &lt;code&gt;Run&lt;/code&gt;. When you select &lt;code&gt;Compile&lt;/code&gt; it executes dosbox, mounts the workspace folder to &lt;code&gt;c:&lt;/code&gt;, and executes &lt;code&gt;compile.bat&lt;/code&gt;. &lt;code&gt;Run&lt;/code&gt; is similar to &lt;code&gt;Compile&lt;/code&gt; but executes &lt;code&gt;run.bat&lt;/code&gt; instead. If you need to add more DOS commands, those need to be preceded by the &lt;code&gt;"-c"&lt;/code&gt; argument and in double quotes (&lt;code&gt;"&lt;/code&gt;). The &lt;code&gt;"group"&lt;/code&gt; keyword assigns what type of task we have described. Saying to VSCode that &lt;code&gt;Compile&lt;/code&gt; is of group kind &lt;code&gt;build&lt;/code&gt; let's us execute it with the build key-binding (&lt;code&gt;shift+ctrl+b&lt;/code&gt;). To assign a key-binding to &lt;code&gt;Run&lt;/code&gt;, press &lt;code&gt;ctrl+k&lt;/code&gt; to bring up the Keyboard Shortcuts window, click below &lt;code&gt;Keybinding&lt;/code&gt; next to &lt;code&gt;Tasks: Run Test Task&lt;/code&gt; and click a desired key combination for running your program (I chose &lt;code&gt;F9&lt;/code&gt;). Press &lt;code&gt;Ctrl+S&lt;/code&gt; to now save the keybinding. Finally, create the files &lt;code&gt;compile.bat&lt;/code&gt; and &lt;code&gt;run.bat&lt;/code&gt; in the root of the workspace directory. We will leave them empty for now.&lt;/p&gt;
+&lt;h1&gt;Installing a compiler&lt;/h1&gt;
+&lt;p&gt;So where/how should we install the compiler? First of all you have to find it somewhere (I will not tell you where, if you made it this far you can probably use a search engine). Your method of installation might differ, however to showcase it let's suppose we have an archive of Borland Turbo C++ 1.01 which contains a bunch of &lt;code&gt;.img&lt;/code&gt; files. To set it up, start by running dosbox and mounting the root of the workspace directory (cool trick: just press &lt;code&gt;ctrl+shift+b&lt;/code&gt; to run the dummy &lt;code&gt;compile&lt;/code&gt; command). Then (if you are using dosbox-x) select &lt;code&gt;Drive -&amp;gt; A -&amp;gt; Mount multiple disk/CD images&lt;/code&gt;, navigate to the folder where the &lt;code&gt;.img&lt;/code&gt; files are, and select them all. Then execute:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Z:\&amp;gt; a:
+
+A:\&amp;gt; install
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Go ahead with the defaults, and select &lt;code&gt;Start Installation&lt;/code&gt;. If it asks you for a new disk, select &lt;code&gt;Drive -&amp;gt; A -&amp;gt; Swap Disk&lt;/code&gt; from the dosbox-x menu and press enter. If the disk is incorrect, press &lt;code&gt;ESC&lt;/code&gt; and repeat &lt;code&gt;Drive -&amp;gt; A -&amp;gt; Swap Disk&lt;/code&gt;, enter (until it swaps with the correct floppy image). Repeat that process until you are left to the following screen:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Installation Complete!" src="{filename}../../../img/2c.png"&gt;&lt;/p&gt;
+&lt;p&gt;Finally add two empty directories &lt;code&gt;src&lt;/code&gt; and &lt;code&gt;build&lt;/code&gt;, and also add the following to your &lt;code&gt;compile.bat&lt;/code&gt; and &lt;code&gt;run.bat&lt;/code&gt; files:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;compile.bat&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;C&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="k"&gt;CD&lt;/span&gt;\TC\BIN
+TCC.EXE C:\SRC\MAIN.C
+&lt;span class="k"&gt;COPY&lt;/span&gt; MAIN.EXE C:\BUILD
+&lt;span class="k"&gt;PAUSE&lt;/span&gt;
+&lt;span class="k"&gt;EXIT&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code&gt;run.bat&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;C&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="k"&gt;CD&lt;/span&gt;\BUILD 
+MAIN
+&lt;span class="k"&gt;PAUSE&lt;/span&gt;
+&lt;span class="k"&gt;EXIT&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Where the last two lines pause after execution and close the dosbox window. Of course, if your compiler differs/you want to alter program structure etc, you need to adapt those files accordingly.&lt;/p&gt;
+&lt;h1&gt;Testing the setup&lt;/h1&gt;
+&lt;p&gt;Finally, lets add a file &lt;code&gt;src/main.c&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cp"&gt;#include&lt;/span&gt; &lt;span class="cpf"&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+
+&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello, World!&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Press &lt;code&gt;ctrl+shift+b&lt;/code&gt; to build:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Compiling with TCC" src="{filename}../../../img/2d.png"&gt;&lt;/p&gt;
+&lt;p&gt;And &lt;code&gt;F9&lt;/code&gt; to run &lt;code&gt;build/main.exe&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Compiling with TCC" src="{filename}../../../img/2e.png"&gt;&lt;/p&gt;
+&lt;p&gt;That's it! Happy dos-coding!&lt;/p&gt;</content><category term="Blog"></category><category term="programming"></category><category term="DOS"></category><category term="vscode"></category></entry><entry><title>Hello World</title><link href="https://mmxgn.github.io/hello-world.html" rel="alternate"></link><published>2020-04-22T00:00:00+03:00</published><updated>2020-04-22T00:00:00+03:00</updated><author><name>Emmanouil Theofanis Chourdakis</name></author><id>tag:mmxgn.github.io,2020-04-22:/hello-world.html</id><summary type="html">&lt;p&gt;Introductory article&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;img alt="This is a photo of me" src="{filename}../../../img/avatar.png"&gt;&lt;/p&gt;
 &lt;p&gt;Hello world, I am Emmanouil Theofanis Chourdakis. You can simply call me Manos. I am a PhD Candidate of Computer Science at the Centre for Digital Music at Queen Mary University of London. I recently defended my thesis and I am going to be awarded a Doctor's award once I have submitted the requested ammendments. Find more &lt;a href="https://mmxgn.github.io/pages/about-me.html"&gt;about me&lt;/a&gt;, my &lt;a href="{filename}/pages/research.md"&gt;research&lt;/a&gt;, my &lt;a href="https://mmxgn.github.io/pages/software.html"&gt;software&lt;/a&gt; and also &lt;a href="{filename}/pages/other.md"&gt;other stuff&lt;/a&gt; I get my hands on to and bother to upload. &lt;/p&gt;</content><category term="Blog"></category><category term="introduction"></category></entry></feed>

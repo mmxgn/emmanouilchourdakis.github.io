@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+          <title>Emmanouil Theofanis Chourdakis - Using Visual Studio Code as an IDE for making DOS Programs (part 1)</title>
+        <meta charset="utf-8" />
+        <meta name="generator" content="Pelican" />
+        <link href="https://mmxgn.github.io/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Emmanouil Theofanis Chourdakis Full Atom Feed" />
+        <link href="https://mmxgn.github.io/feeds/blog.atom.xml" type="application/atom+xml" rel="alternate" title="Emmanouil Theofanis Chourdakis Categories Atom Feed" />
+
+        <link rel="stylesheet" href="https://mmxgn.github.io/theme/css/rdark.css" />
+	<link rel="stylesheet" type="text/css" href="https://mmxgn.github.io/theme/css/main.css" />
+        <link href="https://mmxgn.github.io/" type="application/atom+xml" rel="alternate" title="Emmanouil Theofanis Chourdakis ATOM Feed" /><!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	
+<!-- Using MathJax, with the delimiters $ -->
+<!-- Conflict with pygments for the .mo and .mi -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+  "HTML-CSS": {
+  styles: {
+  ".MathJax .mo, .MathJax .mi": {color: "black ! important"}}
+  },
+  tex2jax: {inlineMath: [['$','$'], ['\\\\(','\\\\)']],processEscapes: true}
+  });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+
+
+
+
+    <meta name="tags" content="programming" />
+    <meta name="tags" content="DOS" />
+    <meta name="tags" content="vscode" />
+
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="https://mmxgn.github.io/">Emmanouil Theofanis Chourdakis</a></h1>
+        </header><!-- /#banner -->
+        <nav id="menu"><ul>
+            <li><a href="https://mmxgn.github.io/pages/about-me.html">About Me</a></li>
+            <li><a href="https://mmxgn.github.io/pages/download-cv.html">Download CV</a></li>
+            <li><a href="https://mmxgn.github.io/pages/software.html">Software</a></li>
+            <li class="active"><a href="https://mmxgn.github.io/category/blog.html">Blog</a></li>
+        </ul></nav><!-- /#menu -->
+<section id="content" class="body">
+  <header>
+    <h2 class="entry-title">
+      <a href="https://mmxgn.github.io/using-visual-studio-code-as-an-ide-for-making-dos-programs-part-1.html" rel="bookmark"
+         title="Permalink to Using Visual Studio Code as an IDE for making DOS Programs (part 1)">Using Visual Studio Code as an IDE for making DOS Programs (part 1)</a></h2>
+ 
+  </header>
+  <footer class="post-info">
+    <time class="published" datetime="2021-06-15T00:00:00+03:00">
+      Tue 15 June 2021
+    </time>
+    <address class="vcard author">
+      By           <a class="url fn" href="https://mmxgn.github.io/author/emmanouil-theofanis-chourdakis.html">Emmanouil Theofanis Chourdakis</a>
+    </address>
+    <div class="category">
+        Category: <a href="https://mmxgn.github.io/category/blog.html">Blog</a>
+    </div>
+    <div class="tags">
+        Tags:
+            <a href="https://mmxgn.github.io/tag/programming.html">programming</a>
+            <a href="https://mmxgn.github.io/tag/dos.html">DOS</a>
+            <a href="https://mmxgn.github.io/tag/vscode.html">vscode</a>
+    </div>
+  </footer><!-- /.post-info -->
+  <div class="entry-content">
+    <h1>Introduction</h1>
+<p>While I have done some game programming using modern game engines, I would like to go a bit deeper into how those engines work, and try to make a little game in an engine of my own. While I can use libraries such as <a href="https://www.libsdl.org/download-2.0.php">SDL</a> or <a href="https://www.raylib.com/">RayLib</a> on a modern system, using modern IDEs, etc, I want to go a bit more bare-bone. Inspired by <a href="https://www.youtube.com/watch?v=f9kaOk0a664">a YouTube video on DOS programming in 2019</a> and <a href="https://www.reddit.com/r/gamedev/comments/nu7mx8/how_can_i_get_started_with_gamegraphics/h0w2bky/?context=3">a Reddit discussion I came across</a>, I will try to make my own game-engine, for educational purposes (I don't know what it's going to be focused yet). The engine will run on dosbox. The code, however, I want to write on a modern IDE since, nostalgia aside, I will surely miss modern editor environment features. Since I am using VSCode at work and I am familiar with it, I will mostly use that. </p>
+<h1>Configuring VSCode to run applications with <code>dosbox</code></h1>
+<p>This part is surprisingly easy. I will assume you have installed dosbox (I am actually using dosbox-x and <strong>strongly</strong> recommend you do the same) to your system and is in the system path. If not, just replace <code>dosbox-x</code> in the following steps to your full <code>/path/to/dosbox</code> (or <code>C:\path\to\dosbox.exe</code> on windows) path. Create an empty folder where you will store your project, open it with VSCode (<code>File -&gt; Open Folder...</code>). Now we have to do two things:</p>
+<ol>
+<li>Tell VSCode how to compile and run our files.</li>
+<li>Assign key-bindings to the above tasks.</li>
+</ol>
+<p>To do that, we create a folder: <code>.vscode</code>. In it create a file: <code>tasks.json</code>. In <code>tasks.json</code>, add (replace <code>dosbox-x</code> below with your version of the dosbox binary):</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;2.0.0&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;tasks&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;shell&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Compile&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;dosbox-x&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;args&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;-c&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;mount c ${workspaceFolder}&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;-c&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;c:\\compile.bat&quot;</span>
+            <span class="p">],</span>
+            <span class="nt">&quot;group&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;kind&quot;</span><span class="p">:</span> <span class="s2">&quot;build&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;isDefault&quot;</span><span class="p">:</span> <span class="kc">true</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="nt">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;shell&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;label&quot;</span><span class="p">:</span> <span class="s2">&quot;Run&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;command&quot;</span><span class="p">:</span> <span class="s2">&quot;dosbox-x&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;args&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;-c&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;mount c ${workspaceFolder}&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;-c&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;c:\\run.bat&quot;</span>
+            <span class="p">],</span>
+            <span class="nt">&quot;group&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;kind&quot;</span><span class="p">:</span> <span class="s2">&quot;test&quot;</span><span class="p">,</span>
+                <span class="nt">&quot;isDefault&quot;</span><span class="p">:</span> <span class="kc">false</span>
+            <span class="p">}</span>
+
+        <span class="p">}</span>        
+    <span class="p">],</span>
+  <span class="p">}</span>
+</code></pre></div>
+
+<p>What this does is create two new tasks: <code>Compile</code> and <code>Run</code>. When you select <code>Compile</code> it executes dosbox, mounts the workspace folder to <code>c:</code>, and executes <code>compile.bat</code>. <code>Run</code> is similar to <code>Compile</code> but executes <code>run.bat</code> instead. If you need to add more DOS commands, those need to be preceded by the <code>"-c"</code> argument and in double quotes (<code>"</code>). The <code>"group"</code> keyword assigns what type of task we have described. Saying to VSCode that <code>Compile</code> is of group kind <code>build</code> let's us execute it with the build key-binding (<code>shift+ctrl+b</code>). To assign a key-binding to <code>Run</code>, press <code>ctrl+k</code> to bring up the Keyboard Shortcuts window, click below <code>Keybinding</code> next to <code>Tasks: Run Test Task</code> and click a desired key combination for running your program (I chose <code>F9</code>). Press <code>Ctrl+S</code> to now save the keybinding. Finally, create the files <code>compile.bat</code> and <code>run.bat</code> in the root of the workspace directory. We will leave them empty for now.</p>
+<h1>Installing a compiler</h1>
+<p>So where/how should we install the compiler? First of all you have to find it somewhere (I will not tell you where, if you made it this far you can probably use a search engine). Your method of installation might differ, however to showcase it let's suppose we have an archive of Borland Turbo C++ 1.01 which contains a bunch of <code>.img</code> files. To set it up, start by running dosbox and mounting the root of the workspace directory (cool trick: just press <code>ctrl+shift+b</code> to run the dummy <code>compile</code> command). Then (if you are using dosbox-x) select <code>Drive -&gt; A -&gt; Mount multiple disk/CD images</code>, navigate to the folder where the <code>.img</code> files are, and select them all. Then execute:</p>
+<div class="highlight"><pre><span></span><code>Z:\&gt; a:
+
+A:\&gt; install
+</code></pre></div>
+
+<p>Go ahead with the defaults, and select <code>Start Installation</code>. If it asks you for a new disk, select <code>Drive -&gt; A -&gt; Swap Disk</code> from the dosbox-x menu and press enter. If the disk is incorrect, press <code>ESC</code> and repeat <code>Drive -&gt; A -&gt; Swap Disk</code>, enter (until it swaps with the correct floppy image). Repeat that process until you are left to the following screen:</p>
+<p><img alt="Installation Complete!" src="{filename}../../../img/2c.png"></p>
+<p>Finally add two empty directories <code>src</code> and <code>build</code>, and also add the following to your <code>compile.bat</code> and <code>run.bat</code> files:</p>
+<p><code>compile.bat</code>:</p>
+<div class="highlight"><pre><span></span><code>C<span class="p">:</span>
+<span class="k">CD</span>\TC\BIN
+TCC.EXE C:\SRC\MAIN.C
+<span class="k">COPY</span> MAIN.EXE C:\BUILD
+<span class="k">PAUSE</span>
+<span class="k">EXIT</span>
+</code></pre></div>
+
+<p><code>run.bat</code></p>
+<div class="highlight"><pre><span></span><code>C<span class="p">:</span>
+<span class="k">CD</span>\BUILD 
+MAIN
+<span class="k">PAUSE</span>
+<span class="k">EXIT</span>
+</code></pre></div>
+
+<p>Where the last two lines pause after execution and close the dosbox window. Of course, if your compiler differs/you want to alter program structure etc, you need to adapt those files accordingly.</p>
+<h1>Testing the setup</h1>
+<p>Finally, lets add a file <code>src/main.c</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+
+<span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello, World!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Press <code>ctrl+shift+b</code> to build:</p>
+<p><img alt="Compiling with TCC" src="{filename}../../../img/2d.png"></p>
+<p>And <code>F9</code> to run <code>build/main.exe</code>:</p>
+<p><img alt="Compiling with TCC" src="{filename}../../../img/2e.png"></p>
+<p>That's it! Happy dos-coding!</p>
+  </div><!-- /.entry-content -->
+</section>
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="https://getpelican.com/">Pelican</a>,
+                which takes great advantage of <a href="https://www.python.org/">Python</a>.
+                </address><!-- /#about -->
+        </footer><!-- /#contentinfo -->
+</body>
+</html>
