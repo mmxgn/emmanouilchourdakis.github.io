@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 AUTHOR = 'Emmanouil Theofanis Chourdakis'
 SITENAME = 'Emmanouil Theofanis Chourdakis'
-SITEURL = ''
+SITEURL = 'http://mmxgn.github.io'
 
 PATH = 'content'
 
@@ -20,10 +20,11 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 # Blogroll
-LINKS = (('Intelligent Sound Engineering', 'https://intelligentsoundengineering.wordpress.com/'),)
+LINKS = (('Nomono', 'https://www.nomono.co'),('Intelligent Sound Engineering', 'https://intelligentsoundengineering.wordpress.com/'),)
 
 # Social widget
 SOCIAL = (('LinkedIn', 'https://www.linkedin.com/in/echourdakis/'),
+        ('Github', 'https://www.github.com/mmxgn'),
           ('Youtube', 'https://www.youtube.com/user/mmxgn'))
 
 DEFAULT_PAGINATION = 1
@@ -32,3 +33,7 @@ DEFAULT_PAGINATION = 1
 #RELATIVE_URLS = True
 
 STATIC_PATHS = ['img', 'pdf']
+
+LANDING_PAGE_ABOUT="pages/about-me.html"
+
+THEME="/home/mmxgn/git/mmxgn.github.io/theme"
